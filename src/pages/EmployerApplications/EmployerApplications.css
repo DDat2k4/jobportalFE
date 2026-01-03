@@ -1,0 +1,29 @@
+/* page-specific styles (optional) */
+
+.employer-apps-search-form {
+    padding: 8px 10px;
+}
+
+.employer-apps-status-container {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.employer-apps-status-label {
+    padding: 6px 10px;
+}
+
+.employer-apps-feedback-input {
+    min-width: 180px;
+}
+
+.employer-apps-action-column {
+    width: 120px;
+}
+
+.employer-apps-pagination-container {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,17 @@
+/* Narrow container used by this page */
+.container-narrow {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* The page uses `mb-12` but Bootstrap doesn't have it by default */
+.mb-12 { margin-bottom: 12px; }
+
+/* Pagination wrapper helper */
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+/* page-specific styles (optional) */

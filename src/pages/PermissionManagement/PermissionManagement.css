@@ -1,0 +1,53 @@
+/* page-specific styles (optional) */
+
+.permission-search-group {
+    align-items: stretch;
+}
+
+.permission-search-input {
+    margin-bottom: 0;
+}
+
+.permission-search-btn {
+    height: 34px;
+    margin-bottom: 0;
+}
+
+.permission-id-column {
+    width: 60px;
+}
+
+.permission-actions-column {
+    white-space: nowrap;
+    text-align: right;
+}
+
+.permission-description-cell {
+    max-width: 600px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.permission-edit-btn {
+    margin-right: 8px;
+}
+
+.permission-pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.permission-delete-modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.permission-delete-modal-error {
+    margin-top: 10px;
+}
+
+.permission-form-modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.4);
+}

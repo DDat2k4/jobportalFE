@@ -1,0 +1,22 @@
+/* page-specific styles (optional) */
+
+.employer-name {
+    font-weight: 600;
+}
+
+.employer-email,
+.employer-phone {
+    font-size: 13px;
+    color: #888;
+}
+
+.employer-roles {
+    font-size: 12px;
+    color: #28a745;
+    margin-top: 2px;
+}
+
+.employer-pagination-container {
+    display: flex;
+    justify-content: center;
+}

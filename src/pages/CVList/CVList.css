@@ -1,0 +1,42 @@
+/* page-specific styles (optional) */
+
+.panel-heading-flex {
+    display: flex;
+    align-items: center;
+}
+
+.cvlist-header-flexbox {
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.cvlist-header-title {
+    margin: 0;
+}
+
+.cvlist-header-actions {
+    margin-left: auto;
+}
+
+.cvlist-table-actions {
+    width: 320px;
+    text-align: right;
+}
+
+.cvlist-table-number {
+    width: 60px;
+}
+
+.cvlist-pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.cvlist-delete-modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.cvlist-delete-modal-error {
+    margin-top: 10px;
+}

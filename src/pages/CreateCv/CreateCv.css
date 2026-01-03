@@ -1,0 +1,96 @@
+/* page-specific styles (optional) */
+
+/* Panel header actions / spacing helpers used in CreateCv.jsx */
+.cv-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cv-actions {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Used as row wrapper for consistent spacing */
+.cv-gap-8 {
+  row-gap: 8px;
+}
+
+/* Section item container */
+.cv-row-box {
+  border: 1px solid #eef0f3;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+  background: #fff;
+}
+
+.cv-item-row > [class*="col-"] {
+  margin-bottom: 8px;
+}
+
+.cv-desc {
+  margin-top: 8px;
+}
+
+/* Section panel styling (safe even if Bootstrap panel exists) */
+.cv-panel {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cv-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Empty state block */
+.cv-empty {
+  padding: 16px;
+  border: 1px dashed #d7dbe2;
+  border-radius: 10px;
+  background: #fafbfc;
+}
+
+.cv-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cv-empty-footer {
+  margin-top: 10px;
+}
+
+/* Light ghost button (used in quick actions) */
+.btn-ghost {
+  background: transparent;
+  border: 1px solid #d7dbe2;
+  color: #111827;
+}
+
+.btn-ghost:hover {
+  background: #f3f4f6;
+}
+
+/* Profile header block in left panel (CreateCv.jsx currently uses inline for layout) */
+.cv-profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cv-profileAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}

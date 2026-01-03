@@ -1,0 +1,61 @@
+/* page-specific styles (optional) */
+
+.skill-search-group {
+    align-items: stretch;
+}
+
+.skill-search-input {
+    margin-bottom: 0;
+}
+
+.skill-search-btn {
+    height: 34px;
+    margin-bottom: 0;
+}
+
+.skill-id-column {
+    width: 60px;
+}
+
+.skill-type-cell {
+    max-width: 200px;
+}
+
+.skill-description-cell {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.skill-created-cell {
+    max-width: 200px;
+}
+
+.skill-actions-column {
+    white-space: nowrap;
+    text-align: right;
+}
+
+.skill-edit-btn {
+    margin-right: 8px;
+}
+
+.skill-pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.skill-delete-modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.skill-delete-modal-error {
+    margin-top: 10px;
+}
+
+.skill-form-modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.4);
+}

@@ -1,0 +1,57 @@
+/* page-specific styles (optional) */
+
+.role-search-group {
+    align-items: stretch;
+}
+
+.role-search-input {
+    margin-bottom: 0;
+}
+
+.role-search-btn {
+    height: 34px;
+    margin-bottom: 0;
+}
+
+.role-id-column {
+    width: 60px;
+}
+
+.role-actions-column {
+    white-space: nowrap;
+    text-align: right;
+}
+
+.role-description-cell {
+    max-width: 600px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.role-permissions-btn {
+    margin-right: 8px;
+}
+
+.role-edit-btn {
+    margin-right: 8px;
+}
+
+.role-pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.role-delete-modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.role-delete-modal-error {
+    margin-top: 10px;
+}
+
+.role-form-modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.4);
+}

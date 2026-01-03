@@ -1,0 +1,156 @@
+/* page-specific styles (optional) */
+
+/* Layout container (replace inline padding/maxWidth/margin) */
+.addjob-container {
+  padding-left: 32px;
+  padding-right: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Toast */
+.addjob-toast-container {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1080;
+}
+
+.addjob-toast {
+  min-width: 240px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  color: #fff;
+}
+
+.addjob-toast--success { background: #28a745; }
+.addjob-toast--danger { background: #dc3545; }
+.addjob-toast--info { background: #007bff; }
+
+/* Notice */
+.addjob-notice {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 2000;
+  min-width: 280px;
+  box-shadow: 0 10px 30px rgba(17, 24, 39, 0.15);
+}
+
+/* Box body */
+.addjob-box-body {
+  background: #fff;
+  padding: 28px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* Location */
+.addjob-location-col { position: relative; }
+.addjob-location-row { gap: 8px; }
+
+.addjob-loc-btn {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.addjob-loc-suggestions {
+  position: absolute;
+  z-index: 1100;
+  left: 0;
+  right: 0;
+}
+
+.addjob-loc-suggestions-list {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+/* Skills */
+.addjob-skills-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.addjob-skills-list {
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #fafafa;
+}
+
+.addjob-skill-row {
+  display: grid;
+  grid-template-columns: 1fr 200px 200px 100px;
+  gap: 12px;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.addjob-skill-row:not(:last-child) { border-bottom: 1px solid #f1f1f1; }
+
+.addjob-skill-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.addjob-skill-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.addjob-skill-fieldLabel {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+}
+
+.addjob-skill-select {
+  width: 100%;
+  padding: 6px 8px;
+  height: 40px;
+}
+
+.addjob-skill-actions { text-align: right; }
+
+.addjob-skill-removeBtn {
+  height: 36px;
+  padding: 4px 8px;
+}
+
+/* Modal */
+.addjob-modal-backdrop {
+  display: block;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.addjob-modal-dialog { max-width: 1100px; }
+
+.addjob-modal-body {
+  padding-top: 12px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.addjob-modal-skillList {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  padding: 12px;
+}
+
+.addjob-submitRow { margin-top: 16px; }

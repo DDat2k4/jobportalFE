@@ -1,0 +1,31 @@
+/* page-specific styles (optional) */
+
+/* Search bar */
+.cm-inputGroup { align-items: stretch; }
+.cm-searchInput { margin-bottom: 0; }
+
+.cm-searchBtn {
+  height: 34px;
+  margin-bottom: 0;
+}
+
+/* Table column widths */
+.cm-colIndex { width: 60px; }
+.cm-colActions { width: 180px; }
+
+/* Description cell ellipsis */
+.cm-descCell {
+  max-width: 600px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Pagination center */
+.cm-paginationCenter { display: flex; justify-content: center; }
+
+/* Modal backdrop (replace inline display/background) */
+.cm-modalBackdrop {
+  display: block;
+  background: rgba(0, 0, 0, 0.4);
+}

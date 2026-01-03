@@ -1,0 +1,18 @@
+/* page-specific styles (optional) */
+
+.seeker-email,
+.seeker-phone {
+    font-size: 13px;
+    color: #888;
+}
+
+.seeker-roles {
+    font-size: 12px;
+    color: #28a745;
+    margin-top: 2px;
+}
+
+.seeker-pagination-container {
+    display: flex;
+    justify-content: center;
+}

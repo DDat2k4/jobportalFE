@@ -1,0 +1,49 @@
+/* page-specific styles (optional) */
+
+.notifications-unread-badge {
+    margin-left: 10px;
+}
+
+.notifications-reload-btn {
+    margin-left: 10px;
+}
+
+.notifications-panel-body-no-padding {
+    padding: 0;
+}
+
+.notifications-loading-icon {
+    font-size: 24px;
+}
+
+.notifications-empty-icon {
+    font-size: 48px;
+}
+
+.notifications-empty-text {
+    margin-top: 10px;
+}
+
+.notifications-table {
+    margin-bottom: 0;
+}
+
+.notifications-date-column {
+    width: 180px;
+}
+
+.notifications-unread-row {
+    background-color: #f9f9f9;
+}
+
+.notifications-clickable-row {
+    cursor: pointer;
+}
+
+.notifications-default-row {
+    cursor: default;
+}
+
+.notifications-pagination {
+    margin-bottom: 0;
+}

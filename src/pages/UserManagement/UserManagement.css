@@ -1,0 +1,113 @@
+/* page-specific styles (optional) */
+
+.user-search-group {
+    align-items: stretch;
+}
+
+.user-search-input {
+    margin-bottom: 0;
+}
+
+.user-search-btn {
+    height: 34px;
+    margin-bottom: 0;
+}
+
+.user-role-select {
+    display: inline-block;
+    width: 220px;
+    margin-right: 8px;
+}
+
+.user-role-locked-label {
+    display: inline-block;
+    min-width: 220px;
+    margin-right: 8px;
+    padding: 7px 10px;
+    text-align: center;
+}
+
+.user-status-select {
+    display: inline-block;
+    width: 160px;
+}
+
+.user-id-column {
+    width: 60px;
+}
+
+.user-name-column {
+    min-width: 160px;
+}
+
+.user-email-column {
+    min-width: 240px;
+}
+
+.user-email-cell {
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-role-column {
+    width: 160px;
+}
+
+.user-status-column {
+    width: 120px;
+}
+
+.user-actions-column {
+    white-space: nowrap;
+    text-align: right;
+}
+
+.user-status-dropdown {
+    margin-right: 8px;
+}
+
+.user-edit-profile-btn {
+    margin-right: 8px;
+}
+
+.user-edit-account-btn {
+    margin-right: 8px;
+}
+
+.user-manage-roles-btn {
+    margin-right: 8px;
+}
+
+.user-pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.user-modal {
+    display: block;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.user-modal-error {
+    margin-top: 10px;
+}
+
+.user-roles-list {
+    max-height: 360px;
+    overflow: auto;
+    border: 1px solid #eee;
+    padding: 8px;
+}
+
+.user-roles-list-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 4px;
+}
+
+.user-roles-list-desc {
+    opacity: 0.8;
+}

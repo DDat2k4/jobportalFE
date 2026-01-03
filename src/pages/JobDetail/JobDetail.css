@@ -1,0 +1,250 @@
+/* page-specific styles (optional) */
+
+.job-detail-logo-container {
+    width: 100px;
+    height: 100px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 0 auto 10px;
+    background: #f7f9fc;
+    border: 1px solid #e9edf3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.job-detail-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.job-detail-logo-initials {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #4a5568;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    background: #eef2f7;
+}
+
+.job-detail-title {
+    margin-bottom: 6px;
+}
+
+.job-detail-contact-item {
+    margin-top: 6px;
+}
+
+.job-detail-contact-item-phone {
+    margin-top: 2px;
+}
+
+.job-detail-apply-btn-container {
+    margin-top: 10px;
+}
+
+.job-detail-description-text {
+    white-space: pre-wrap;
+}
+
+.job-detail-requirements-text {
+    white-space: pre-wrap;
+}
+
+.job-detail-qualifications-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.job-detail-skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.job-detail-skill-tag {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #fff;
+    border: 1px solid #eef2f7;
+    border-radius: 6px;
+}
+
+.job-detail-location-text {
+    margin-bottom: 10px;
+}
+
+.job-detail-map-container {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e9edf3;
+}
+
+.job-detail-map-iframe {
+    border: 0;
+}
+
+.job-detail-cv-meta-flex {
+    flex: 1;
+}
+
+.job-detail-cv-meta-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.job-detail-cv-default-label {
+    margin-left: 6px;
+}
+
+.job-detail-cover-letter-group {
+    margin-top: 10px;
+}
+
+.job-detail-apply-error {
+    margin-top: 10px;
+}
+
+/* Company Modal Styles for JobDetail */
+.jp-company-modal {
+  max-width: 700px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.company-detail-content {
+  padding: 10px 0;
+}
+
+.company-header-info {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.company-logo-large {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+}
+
+.company-logo-large img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.company-basic-info {
+  flex: 1;
+}
+
+.company-basic-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.company-industry,
+.company-location {
+  margin: 5px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.company-industry i,
+.company-location i {
+  margin-right: 8px;
+  color: #007bff;
+}
+
+.company-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-block h5 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-block h5 i {
+  color: #007bff;
+}
+
+.info-block p {
+  margin: 0;
+  color: #555;
+  line-height: 1.6;
+}
+
+.info-block a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.info-block a:hover {
+  text-decoration: underline;
+}
+
+.job-detail-company-socials {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.job-detail-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.job-detail-social-link i {
+  width: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .jp-company-modal {
+    max-width: 95%;
+    margin: 20px auto;
+  }
+
+  .company-header-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .company-logo-large {
+    width: 100px;
+    height: 100px;
+  }
+
+  .company-basic-info h3 {
+    font-size: 20px;
+  }
+}

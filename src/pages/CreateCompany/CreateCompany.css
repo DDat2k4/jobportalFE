@@ -1,0 +1,52 @@
+/* page-specific styles (optional) */
+
+.cc-toast-container {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1080;
+}
+
+.cc-toast {
+  min-width: 240px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  color: #fff;
+}
+
+.cc-toast--success { background: #28a745; }
+.cc-toast--danger { background: #dc3545; }
+.cc-toast--info { background: #007bff; }
+
+.cc-notice {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 2000;
+  min-width: 280px;
+  box-shadow: 0 10px 30px rgba(17, 24, 39, 0.15);
+}
+
+.cc-noticeClose {
+  line-height: 1;
+  border: none;
+  background: transparent;
+}
+
+/* Social Links Row Alignment */
+.cc-social-remove-col {
+  display: flex;
+  align-items: flex-end;
+}
+
+.cc-social-remove-col .company-socialRemove {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 0;
+}
+
+.cc-social-remove-col .btn {
+  margin-bottom: 22px !important;
+}

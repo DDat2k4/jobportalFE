@@ -1,0 +1,103 @@
+/* layout helpers */
+.mt-10 { margin-top: 10px; }
+.mt-0 { margin-top: 0; }
+.gap-8 { gap: 8px; }
+
+/* common flex headers */
+.cv-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cv-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+}
+
+/* section editor panel */
+.cv-panel {
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.cv-panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* section item container */
+.cv-row-box {
+  border: 1px solid #e9edf3;
+  background: #fbfdff;
+  border-radius: 6px;
+  padding: 10px 10px 6px;
+  margin-bottom: 10px;
+}
+.cv-item-row {
+  margin-bottom: 8px;
+}
+
+/* help and spacing */
+.cv-help { margin-top: 4px; }
+.cv-help-flex {
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.cv-desc { margin-top: 6px; }
+
+/* row gap in SectionRow header fields */
+.cv-gap-8 { gap: 8px; }
+
+/* preview block */
+.cv-preview-block {
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid #e9edf3;
+  border-radius: 8px;
+}
+
+/* back button container in preview */
+.cv-back-wrap { margin-top: 15px; }
+
+/* empty state */
+.cv-empty {
+  border: 1px dashed #e9edf3;
+  background: #fff;
+  border-radius: 8px;
+  padding: 18px;
+  text-align: center;
+  color: #6b7c8a;
+}
+.cv-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0 12px;
+}
+.cv-empty-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* lightweight outline button for quick add */
+.btn-ghost {
+  background: #fff;
+  color: #26ae61;
+  border: 1px solid #cfe8da;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-weight: 600;
+}
+.btn-ghost:hover,
+.btn-ghost:focus {
+  background: rgba(38,174,97,0.06);
+  color: #1f8e50;
+  border-color: #26ae61;
+}

@@ -1,0 +1,59 @@
+/* page-specific styles (optional) */
+
+.cv-back-wrap {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.cv-preview-personal-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.cv-preview-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #e5e9f2;
+}
+
+.cv-preview-personal-name {
+    margin: 0;
+}
+
+.cv-preview-personal-detail {
+    color: #556;
+}
+
+.cv-preview-title-section {
+    margin-bottom: 24px;
+}
+
+.cv-preview-title {
+    margin-top: 0;
+}
+
+.cv-preview-template {
+    color: #777;
+}
+
+.cv-preview-summary-text {
+    white-space: pre-wrap;
+}
+
+.cv-preview-list {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.cv-preview-experience-description {
+    color: #555;
+}
+
+.cv-preview-skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}

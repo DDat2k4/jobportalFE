@@ -1,0 +1,31 @@
+/* page-specific styles (optional) */
+
+/* quick link row */
+.adm-quicklink { margin-top: 10px; }
+
+/* Jobs by category rows */
+.adm-cat-row { margin-bottom: 10px; }
+.adm-cat-rowTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* progress bar */
+.adm-progress {
+  background: #f0f2f5;
+  height: 8px;
+  border-radius: 4px;
+}
+.adm-progressBar {
+  height: 8px;
+  border-radius: 4px;
+  background: #26ae61;
+  transition: width 0.3s ease;
+}
+
+/* recent applications table area */
+.adm-recentBody {
+  max-height: 360px;
+  overflow: auto;
+}
+.adm-recentTable { margin-bottom: 0; }

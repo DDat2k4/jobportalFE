@@ -1,0 +1,139 @@
+/* Floating notice (replaces inline fixed positioning) */
+.company-notice {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 2000;
+  min-width: 280px;
+  box-shadow: 0 10px 30px rgba(17, 24, 39, 0.15);
+}
+
+.company-noticeClose {
+  line-height: 1;
+  border: none;
+  background: transparent;
+}
+
+/* Logo row gap (edit company section) */
+.company-logoRow {
+  gap: 12px;
+}
+
+/* Hidden helper */
+.company-hidden {
+  display: none;
+}
+
+/* Skills editor */
+.company-skillToolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.company-skillList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #fafafa;
+}
+
+.company-skillRow {
+  display: grid;
+  grid-template-columns: 1fr 150px 120px 80px;
+  gap: 8px;
+  align-items: center;
+}
+
+.company-skillName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.company-skillField {
+  display: flex;
+  flex-direction: column;
+}
+
+.company-skillFieldLabel {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.company-skillRemoveWrap {
+  text-align: right;
+}
+
+/* Skill modal */
+.company-modalBackdrop {
+  display: block;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.company-modalDialog {
+  max-width: 1100px;
+}
+
+.company-modalBody {
+  padding-top: 12px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.company-modalSkillList {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  padding: 12px;
+}
+
+.company-modalSkillItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.company-modalSkillMeta {
+  flex: 1;
+}
+
+.company-modalSkillType {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Address and Social editing forms */
+.d-flex {
+  display: flex;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.align-items-end {
+  align-items: flex-end;
+}
+
+.mrg-bot-10 {
+  margin-bottom: 10px;
+}
+
+.company-socialRemove {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

@@ -1,0 +1,9 @@
+/* page-specific styles (optional) */
+
+.home-banner-bg {
+    background-image: url(/src/assets/img/slider_bg.jpg);
+}
+
+.home-category-select {
+    border-radius: 0 !important;
+}

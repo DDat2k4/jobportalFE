@@ -1,0 +1,57 @@
+/* page-specific styles (optional) */
+
+.role-perm-quick-links {
+    margin-top: 10px;
+}
+
+.role-perm-panel-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.role-perm-roles-list {
+    max-height: 420px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+}
+
+.role-perm-role-item {
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.role-perm-role-description {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.role-perm-assigned-count {
+    font-size: 13px;
+}
+
+.role-perm-search-row {
+    margin-bottom: 10px;
+}
+
+.role-perm-permissions-container {
+    max-height: 460px;
+    overflow: auto;
+    border: 1px solid #eee;
+}
+
+.role-perm-table {
+    margin-bottom: 0;
+}
+
+.role-perm-checkbox-column {
+    width: 60px;
+}
+
+.role-perm-toggle-column {
+    width: 50px;
+}
+
+.role-perm-save-actions {
+    margin-top: 12px;
+}

@@ -1,0 +1,23 @@
+/* page-specific styles (optional) */
+
+.seeker-apps-search-form {
+    padding: 8px 10px;
+}
+
+.seeker-apps-action-column {
+    width: 140px;
+}
+
+.seeker-apps-status-label {
+    padding: 6px 10px;
+}
+
+.seeker-apps-pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.seeker-apps-cancel-modal {
+    display: block !important;
+    background: rgba(0, 0, 0, 0.4);
+}
