@@ -21,7 +21,7 @@ const menuItems = [
       { label: "Employer Applications", link: "/employer-applications", permission: "APPLICATION_UPDATE", role: "EMPLOYER" },
       { label: "Create Company", link: "/create-company", permission: "COMPANY_CREATE"},
       { label: "Add Job", link: "/add-job", permission: "JOB_CREATE" },
-      { label: "Company List", link: "/company-list", permission: "COMPANY_READ" },
+      { label: "Company List", link: "/company-list", permission: "COMPANY_READ" , role: "EMPLOYER"},
     ],
   },
   {
