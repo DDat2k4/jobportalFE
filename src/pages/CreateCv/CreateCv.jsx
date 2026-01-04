@@ -191,8 +191,8 @@ const SectionFields = ({ section, onChange }) => {
           <div key={i} className="cv-row-box">
             <div className="row cv-item-row">
               <div className="col-md-4 col-sm-12">
-                <label>Courses / Subjects</label>
-                <input className="form-control" placeholder="Courses or subjects" value={it.courses}
+                <label>Major / Field of Study</label>
+                <input className="form-control" placeholder="Major or field of study" value={it.courses}
                        onChange={(e) => setItem(i, { courses: e.target.value })} />
               </div>
               <div className="col-md-2 col-sm-6">
@@ -519,7 +519,7 @@ const SectionRow = ({ idx, section, onChange, onRemove, onMoveUp, onMoveDown, ca
           </span>
           <strong>{getTypeLabel(section.type)}</strong>
           {section.title ? (
-            <span className="text-muted" style={{ marginLeft: 6 }}>— {section.title}</span>
+            <span className="text-muted" style={{ marginLeft: 6, textTransform: "none" }}>— {section.title}</span>
           ) : null}
         </div>
         <div className="cv-actions">
@@ -612,13 +612,23 @@ const CreateCV = () => {
       const raw = sessionStorage.getItem(DRAFT_KEY);
       if (!raw) return;
       const draft = JSON.parse(raw);
+      const editParam = searchParams.get("id") || searchParams.get("cvId");
+      const allowRestoreIds = !!editParam;
       if (draft && typeof draft === "object") {
         if (draft.userId !== undefined) setUserId(String(draft.userId));
         if (draft.title !== undefined) setTitle(draft.title);
         if (draft.templateCode !== undefined) setTemplateCode(draft.templateCode);
         if (draft.isDefault !== undefined) setIsDefault(!!draft.isDefault);
-        if (Array.isArray(draft.sections) && draft.sections.length) setSections(draft.sections);
-        if (draft.createdId !== undefined) setCreatedId(draft.createdId);
+        if (Array.isArray(draft.sections) && draft.sections.length) {
+          setSections(
+            draft.sections.map((s, idx) => ({
+              ...s,
+              position: s.position ?? idx + 1,
+              ...(allowRestoreIds ? {} : { id: undefined }),
+            }))
+          );
+        }
+        if (allowRestoreIds && draft.createdId !== undefined) setCreatedId(draft.createdId);
         if (draft.fullName !== undefined) setFullName(draft.fullName);
         if (draft.address !== undefined) setAddress(draft.address);
         if (draft.phone !== undefined) setPhone(draft.phone);
@@ -637,7 +647,6 @@ const CreateCV = () => {
         title,
         templateCode,
         isDefault,
-        createdId,
         sections,
         fullName,
         address,

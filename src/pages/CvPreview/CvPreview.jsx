@@ -213,7 +213,7 @@ const CvPreview = () => {
           {error ? <div className="alert alert-danger">{error}</div> : null}
           {!loading && !error && (
             <div className="row">
-              <div className="col-md-8 col-sm-12">
+              <div className="col-md-12 col-sm-12">
                 {/* Personal info header */}
                 {(() => {
                   const personal = data?.cv?.data?.personal || {};
@@ -240,23 +240,9 @@ const CvPreview = () => {
                     </div>
                   );
                 })()}
-                <div className="cv-preview-title-section">
-                  <h2 className="cv-preview-title">{data.cv?.title || "Untitled CV"}</h2>
-                  <div className="cv-preview-template">Template: {data.cv?.templateCode || "DEFAULT"}</div>
-                </div>
                 {orderedSections.map((s) => (
                   <SectionBlock key={`${s.id || s.type}-${s.position}`} section={s} />
                 ))}
-              </div>
-              <div className="col-md-4 col-sm-12">
-                <div className="panel panel-default">
-                  <div className="panel-heading"><h4>Information</h4></div>
-                  <div className="panel-body">
-                    <div><strong>Default:</strong> {data.cv?.isDefault ? "Yes" : "No"}</div>
-                    <div><strong>Sections:</strong> {orderedSections.length}</div>
-                    {data?.cv?.data?.personal ? <div><strong>Has Personal Info:</strong> Yes</div> : null}
-                  </div>
-                </div>
               </div>
             </div>
           )}
