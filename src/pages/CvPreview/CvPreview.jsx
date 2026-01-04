@@ -14,42 +14,119 @@ import "../../assets/css/cv.css";
 import "./CvPreview.css";
 import defaultAvatar from "../../assets/img/client-1.jpg";
 
+const formatRange = (from, to) => {
+  if (!from && !to) return "";
+  return ` (${from || "?"} - ${to || "Present"})`;
+};
+
 const SectionBlock = ({ section }) => {
   const { type, title, content } = section;
+  const items = content?.items || [];
+
   return (
     <div className="cv-preview-block">
       <h4 className="mt-0">{title || type}</h4>
-      {type === "SUMMARY" && <p className="cv-preview-summary-text">{content?.text || ""}</p>}
+
+      {(type === "SUMMARY" || type === "OBJECTIVE") && (
+        <p className="cv-preview-summary-text">{content?.text || ""}</p>
+      )}
 
       {type === "EXPERIENCE" && (
         <ul className="cv-preview-list">
-          {(content?.items || []).map((it, i) => (
+          {items.map((it, i) => {
+            const position = it.position || it.role || "";
+            const company = it.company || "";
+            const range = formatRange(it.startDate || it.startYear, it.endDate || it.endYear);
+            return (
+              <li key={i}>
+                <strong>{position || company ? `${position}${position && company ? " at " : ""}${company}` : "Work experience"}</strong>
+                {range}
+                {it.description ? (
+                  <div className="cv-preview-experience-description">{it.description}</div>
+                ) : null}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      {type === "EDUCATION" && (
+        <ul className="cv-preview-list">
+          {items.map((it, i) => {
+            const school = it.school || "";
+            const courses = it.courses || it.degree || "";
+            const range = formatRange(it.startDate || it.startYear, it.endDate || it.endYear);
+            return (
+              <li key={i}>
+                <strong>{school || courses || "Education"}</strong>
+                {courses ? ` — ${courses}` : ""}
+                {range}
+                {it.description ? <div className="cv-preview-experience-description">{it.description}</div> : null}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      {type === "PROJECT" && (
+        <ul className="cv-preview-list">
+          {items.map((it, i) => (
             <li key={i}>
-              <strong>{it.company}</strong> — {it.role}
-              {it.startDate || it.endDate ? (
-                <span> ({it.startDate || "?"} - {it.endDate || "Present"})</span>
-              ) : null}
+              <strong>{it.projectName || "Project"}</strong>
+              {formatRange(it.startDate, it.endDate)}
               {it.description ? <div className="cv-preview-experience-description">{it.description}</div> : null}
             </li>
           ))}
         </ul>
       )}
 
-      {type === "EDUCATION" && (
+      {(type === "HONORS" || type === "CERTIFICATIONS") && (
         <ul className="cv-preview-list">
-          {(content?.items || []).map((it, i) => (
+          {items.map((it, i) => (
             <li key={i}>
-              <strong>{it.school}</strong> — {it.degree}
-              {it.startYear || it.endYear ? <span> ({it.startYear || "?"} - {it.endYear || "?"})</span> : null}
+              <strong>{it.name || "Item"}</strong>
+              {it.time ? ` — ${it.time}` : ""}
             </li>
+          ))}
+        </ul>
+      )}
+
+      {type === "ACTIVITIES" && (
+        <ul className="cv-preview-list">
+          {items.map((it, i) => (
+            <li key={i}>
+              <strong>{it.position || "Activity"}</strong>
+              {it.organizationName ? ` at ${it.organizationName}` : ""}
+              {formatRange(it.startDate, it.endDate)}
+              {it.description ? <div className="cv-preview-experience-description">{it.description}</div> : null}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {type === "REFERENCES" && (
+        <ul className="cv-preview-list">
+          {items.map((it, i) => (
+            <li key={i}>{it.information || "Reference"}</li>
+          ))}
+        </ul>
+      )}
+
+      {type === "INTERESTS" && (
+        <ul className="cv-preview-list">
+          {items.map((it, i) => (
+            <li key={i}>{it.name || "Interest"}</li>
           ))}
         </ul>
       )}
 
       {type === "SKILL" && (
         <div className="cv-preview-skills-container">
-          {(content?.items || []).map((it, i) => (
-            <span key={i} className="skill-tag">{it.name}{it.level ? ` — ${it.level}` : ""}</span>
+          {items.map((it, i) => (
+            <span key={i} className="skill-tag">
+              {it.name || "Skill"}
+              {it.years || it.level ? ` — ${it.years || it.level}` : ""}
+            </span>
           ))}
         </div>
       )}
