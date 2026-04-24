@@ -31,7 +31,7 @@ export default function Footer() {
                 <h4>Explore</h4>
                 <ul>
                   <li><a href="/browse-jobs"><i className="fa fa-angle-double-right"></i> Browse Jobs</a></li>
-                  <li><a href="/browse-categories"><i className="fa fa-angle-double-right"></i> Categories</a></li>
+                  <li><a href="/browse-industry"><i className="fa fa-angle-double-right"></i> Browse Industries</a></li>
                   <li><a href="/company-list"><i className="fa fa-angle-double-right"></i> Companies</a></li>
                 </ul>
               </div>

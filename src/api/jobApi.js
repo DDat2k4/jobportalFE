@@ -81,10 +81,24 @@ export const deleteJob = async (id) => {
   }
 };
 
-// Lấy số lượng công việc theo danh mục
-export const getJobCountsByCategory = async (status = 1) => {
+// Lấy số lượng công việc theo career role
+export const getJobCountsByCareerRole = async (status = 1) => {
   try {
-    const res = await axios.get(`${API_URL}/jobs/count-by-category`, {
+    const res = await axios.get(`${API_URL}/jobs/count-by-career-role`, {
+      params: { status },
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
+    const data = unwrap(res);
+    return Array.isArray(data) ? data : data?.items ?? [];
+  } catch (err) {
+    rethrow(err);
+  }
+};
+
+// Lấy số lượng công việc theo industry
+export const getJobCountsByIndustry = async (status = 1) => {
+  try {
+    const res = await axios.get(`${API_URL}/jobs/count-by-industry`, {
       params: { status },
       headers: { Authorization: `Bearer ${getToken()}` },
     });
@@ -102,7 +116,7 @@ export const getJobs = async ({
   keyword,
   title,
   companyId,
-  categoryId,
+  careerRoleId,
   location,
   sortBy,
   asc,
@@ -114,7 +128,7 @@ export const getJobs = async ({
       ...(keyword ? { keyword } : {}),
       ...(title ? { title } : {}),
       ...(companyId ? { companyId } : {}),
-      ...(categoryId ? { categoryId } : {}),
+      ...(careerRoleId ? { careerRoleId: careerRoleId } : {}),
       ...(location ? { location } : {}),
       ...(sortBy ? { sortBy } : {}),
       ...(typeof asc === "boolean" ? { asc } : {}),

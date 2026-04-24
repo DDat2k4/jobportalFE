@@ -4,6 +4,43 @@
     background-image: url(/src/assets/img/slider_bg.jpg);
 }
 
+/* Remove all border radius from search form */
+.utf_home_form_one {
+    border-radius: 0 !important;
+}
+
+.utf_home_form_one .form-control,
+.utf_home_form_one input,
+.utf_home_form_one input[type="text"],
+.utf_home_form_one select,
+.utf_home_form_one > div > input,
+.utf_home_form_one > div > select {
+    border-radius: 0 !important;
+}
+
+.utf_home_form_one .nice-select,
+.utf_home_form_one .nice-select.open,
+.utf_home_form_one .nice-select::after,
+.utf_home_form_one .nice-select::before {
+    border-radius: 0 !important;
+}
+
+.utf_home_form_one .btn,
+.utf_home_form_one .btn.theme-btn,
+.utf_home_form_one button {
+    border-radius: 0 !important;
+}
+
+.utf_home_form_one .col-md-5 > input,
+.utf_home_form_one .col-md-5 > select,
+.utf_home_form_one .col-md-2 > button {
+    border-radius: 0 !important;
+}
+
+.home-career-role-select {
+    border-radius: 0 !important;
+}
+
 .home-category-select {
     border-radius: 0 !important;
 }

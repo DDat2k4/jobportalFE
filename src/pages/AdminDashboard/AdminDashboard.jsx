@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import { getJobs, getJobCountsByCategory } from "../../api/jobApi";
+import { getJobs, getJobCountsByCareerRole } from "../../api/jobApi";
 import { getCompanies } from "../../api/companyApi";
 import { getUsers } from "../../api/userApi";
 import { getApplications } from "../../api/applicationApi";
@@ -22,12 +22,12 @@ export default function AdminDashboard() {
   const [totalEmployers, setTotalEmployers] = useState(0);
   const [totalSeekers, setTotalSeekers] = useState(0);
   const [totalApplications, setTotalApplications] = useState(0);
-  const [jobsByCategory, setJobsByCategory] = useState([]);
+  const [jobsByCareerRole, setJobsByCareerRole] = useState([]);
   const [recentApplications, setRecentApplications] = useState([]);
 
-  const maxCategoryCount = useMemo(
-    () => (jobsByCategory.length ? Math.max(...jobsByCategory.map((x) => x.jobCount || 0)) : 0),
-    [jobsByCategory]
+  const maxCareerRoleCount = useMemo(
+    () => (jobsByCareerRole.length ? Math.max(...jobsByCareerRole.map((x) => x.jobCount || 0)) : 0),
+    [jobsByCareerRole]
   );
 
   const loadData = async () => {
@@ -58,15 +58,15 @@ export default function AdminDashboard() {
       setTotalApplications(Number(appsAll?.total || 0));
 
       try {
-        const byCat = await getJobCountsByCategory(1);
-        const norm = (byCat || []).map((r, i) => ({
-          categoryId: r.categoryId ?? i,
-          categoryName: r.categoryName ?? r.name ?? `Category ${i + 1}`,
+        const byRole = await getJobCountsByCareerRole(1);
+        const norm = (byRole || []).map((r, i) => ({
+          careerRoleId: r.categoryId ?? i,
+          careerRoleName: r.categoryName ?? r.name ?? `Career Role ${i + 1}`,
           jobCount: r.jobCount ?? r.count ?? 0,
         }));
-        setJobsByCategory(norm);
+        setJobsByCareerRole(norm);
       } catch {
-        setJobsByCategory([]);
+        setJobsByCareerRole([]);
       }
 
       try {
@@ -185,16 +185,16 @@ export default function AdminDashboard() {
                   </button>
                 </div>
                 <div className="panel-body">
-                  {jobsByCategory.length === 0 ? (
+                  {jobsByCareerRole.length === 0 ? (
                     <div className="text-center text-muted">No data</div>
                   ) : (
                     <div>
-                      {jobsByCategory.map((it) => {
-                        const pct = maxCategoryCount ? Math.round((it.jobCount / maxCategoryCount) * 100) : 0;
+                      {jobsByCareerRole.map((it) => {
+                        const pct = maxCareerRoleCount ? Math.round((it.jobCount / maxCareerRoleCount) * 100) : 0;
                         return (
-                          <div key={it.categoryId} className="adm-cat-row">
+                          <div key={it.careerRoleId} className="adm-cat-row">
                             <div className="adm-cat-rowTop">
-                              <span>{it.categoryName}</span>
+                              <span>{it.careerRoleName}</span>
                               <span>{it.jobCount}</span>
                             </div>
                             <div className="adm-progress">

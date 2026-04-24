@@ -10,18 +10,22 @@ import "../../assets/plugins/animate/animate.css";
 import "../../assets/plugins/bootstrap/css/bootsnav.css";
 import "../../assets/plugins/nice-select/css/nice-select.css";
 import "./Home.css";
-import { getAllCategories } from "../../api/categoryApi";
-import { getJobCountsByCategory, getJobs } from "../../api/jobApi";
+import { getAllIndustries } from "../../api/industryApi";
+import { getJobCountsByIndustry, getJobs } from "../../api/jobApi";
 import { getCompany } from "../../api/companyApi";
+import { getAllCareerRoles, getCareerRoles } from "../../api/careerRoleApi";
 
 const Home = () => {
-  const [categories, setCategories] = useState([]);
-  const [featuredCats, setFeaturedCats] = useState([]);
-  const [catsLoading, setCatsLoading] = useState(true);
+  const [industries, setIndustries] = useState([]);
+  const [featuredIndustries, setFeaturedIndustries] = useState([]);
+  const [industriesLoading, setIndustriesLoading] = useState(true);
+  const [careerRoles, setCareerRoles] = useState([]);
+  const [careerRolesLoading, setCareerRolesLoading] = useState(true);
   const [jobs, setJobs] = useState([]);
   const [jobsLoading, setJobsLoading] = useState(false);
   const [jobKeyword, setJobKeyword] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedIndustry, setSelectedIndustry] = useState("");
+  const [selectedCareerRole, setSelectedCareerRole] = useState("");
   const [companyCache, setCompanyCache] = useState({});
 
   // normalize text to be accent-insensitive
@@ -40,29 +44,29 @@ const Home = () => {
     // try { AOS.init(); } catch (e) { /* ignore if already initialized */ }
     (async () => {
       try {
-        const items = await getAllCategories();
-        if (mounted && Array.isArray(items)) setCategories(items);
+        const items = await getAllIndustries();
+        if (mounted && Array.isArray(items)) setIndustries(items);
         // build featured top-8 by job count
         try {
-          const counts = await getJobCountsByCategory(1); // ACTIVE
+          const counts = await getJobCountsByIndustry(1); // ACTIVE
           const countMap = {};
           (counts || []).forEach((it) => {
-            if (it?.categoryId != null) countMap[Number(it.categoryId)] = it.jobCount || 0;
-            if (it?.categoryName) countMap[it.categoryName] = it.jobCount || 0;
+            if (it?.industryId != null) countMap[Number(it.industryId)] = it.jobCount || 0;
+            if (it?.industryName) countMap[it.industryName] = it.jobCount || 0;
           });
           const mapped = (items || []).map((c, i) => {
             const id = c.id ?? c._id ?? i;
-            const name = c.name ?? c.title ?? `Category ${i + 1}`;
+            const name = c.name ?? c.title ?? `Industry ${i + 1}`;
             const jobCount = countMap[Number(id)] ?? countMap[name] ?? 0;
             return { id, name, icon: c.icon ?? null, jobCount };
           });
           mapped.sort((a, b) => (b.jobCount || 0) - (a.jobCount || 0));
-          if (mounted) setFeaturedCats(mapped.slice(0, 8));
+          if (mounted) setFeaturedIndustries(mapped.slice(0, 8));
         } catch { /* ignore count errors */ }
       } catch (err) {
-        console.error("load categories failed", err);
+        console.error("load industries failed", err);
       } finally {
-        if (mounted) setCatsLoading(false);
+        if (mounted) setIndustriesLoading(false);
       }
     })();
 
@@ -71,20 +75,52 @@ const Home = () => {
     };
   }, []);
 
-  // Load latest jobs, filtered by Category if selected
+  // Load career roles based on selected industry
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      setCareerRolesLoading(true);
+      try {
+        let items = [];
+        if (selectedIndustry) {
+          // Load career roles for specific industry
+          const res = await getCareerRoles({ page: 1, size: 1000, industryId: Number(selectedIndustry) });
+          items = res?.items ?? (Array.isArray(res) ? res : []);
+        } else {
+          // Load all career roles
+          items = await getAllCareerRoles();
+        }
+        if (mounted && Array.isArray(items)) {
+          setCareerRoles(items);
+          // Reset selected career role when industry changes
+          setSelectedCareerRole("");
+        }
+      } catch (err) {
+        console.error("load career roles failed", err);
+        if (mounted) setCareerRoles([]);
+      } finally {
+        if (mounted) setCareerRolesLoading(false);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+  }, [selectedIndustry]);
+
+  // Load latest jobs, filtered by Industry and/or Career Role if selected
   const fetchJobs = async () => {
     setJobsLoading(true);
     try {
       const keywordNorm = normalizeText(jobKeyword);
       const params = {
         page: 1,
-        limit: 8,
-        sort: "recent",
-        status: 1,
+        size: 8,
+        sortBy: "id",
+        asc: false,
         ...(keywordNorm ? { keyword: keywordNorm } : {}),
-        filters: {
-          ...(selectedCategory ? { categoryId: Number(selectedCategory) } : {}),
-        },
+        ...(selectedIndustry ? { industryId: Number(selectedIndustry) } : {}),
+        ...(selectedCareerRole ? { careerRoleId: Number(selectedCareerRole) } : {}),
       };
       const res = await getJobs(params);
 
@@ -101,6 +137,12 @@ const Home = () => {
     fetchJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Re-fetch when filters change
+  useEffect(() => {
+    fetchJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedIndustry, selectedCareerRole]);
 
   // After jobs load, fetch missing company info (logoUrl) by companyId
   useEffect(() => {
@@ -179,12 +221,13 @@ const Home = () => {
                 const params = new URLSearchParams();
                 const keywordNorm = normalizeText(jobKeyword);
                 if (keywordNorm) params.set("keyword", keywordNorm);
-                if (selectedCategory) params.set("category", String(selectedCategory));
+                if (selectedIndustry) params.set("industry", String(selectedIndustry));
+                if (selectedCareerRole) params.set("careerRole", String(selectedCareerRole));
                 window.location.href = `/browse-jobs${params.toString() ? `?${params.toString()}` : ""}`;
               }}
             >
               <fieldset className="utf_home_form_one">
-                <div className="col-md-5 col-sm-5 padd-0">
+                <div className="col-md-4 col-sm-4 padd-0">
                   <input
                     type="text"
                     className="form-control br-1"
@@ -194,18 +237,35 @@ const Home = () => {
                   />
                 </div>
 
-                <div className="col-md-5 col-sm-5 padd-0">
+                <div className="col-md-3 col-sm-3 padd-0">
                   <select
-                    className="wide form-control home-category-select"
-                    value={selectedCategory || ""}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="nice-select form-control home-career-role-select"
+                    value={selectedIndustry || ""}
+                    onChange={(e) => setSelectedIndustry(e.target.value)}
                   >
-                    <option value="">All Categories</option>
-                    {catsLoading ? (
+                    <option value="">All Industries</option>
+                    {industriesLoading ? (
                       <option value="" disabled>Loading...</option>
-                    ) : (categories || []).map((cat, idx) => (
-                      <option key={cat.id ?? cat._id ?? idx} value={cat.id ?? cat._id ?? ""}>
-                        {cat.name ?? cat.title ?? cat.category ?? "Unnamed Category"}
+                    ) : (industries || []).map((industry, idx) => (
+                      <option key={industry.id ?? industry._id ?? idx} value={industry.id ?? industry._id ?? ""}>
+                        {industry.name ?? industry.title ?? "Unnamed Industry"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-md-3 col-sm-3 padd-0">
+                  <select
+                    className="nice-select form-control home-career-role-select"
+                    value={selectedCareerRole || ""}
+                    onChange={(e) => setSelectedCareerRole(e.target.value)}
+                  >
+                    <option value="">All Career Roles</option>
+                    {careerRolesLoading ? (
+                      <option value="" disabled>Loading...</option>
+                    ) : (careerRoles || []).map((role, idx) => (
+                      <option key={role.id ?? role._id ?? idx} value={role.id ?? role._id ?? ""}>
+                        {role.name ?? role.title ?? "Unnamed Career Role"}
                       </option>
                     ))}
                   </select>
@@ -290,36 +350,36 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ========== CATEGORY SECTION ========== */}
-      <section className="utf_job_category_area">
+      {/* ========== INDUSTRY SECTION ========== */}
+      <section className="utf_job_career_role_area">
         <div className="container">
           <div className="row">
             <div className="col-md-8 offset-md-2">
               <div className="heading">
-                <h2>Categories</h2>
+                <h2>Industries</h2>
               </div>
             </div>
           </div>
 
           <div className="row">
-            {(featuredCats.length ? featuredCats : []).map((cat) => (
-              <div className="col-md-3 col-sm-6" key={cat.id}>
-                <a href={`/browse-jobs?category=${cat.id}`} title={cat.name}>
+            {(featuredIndustries.length ? featuredIndustries : []).map((industry) => (
+              <div className="col-md-3 col-sm-6" key={industry.id}>
+                <a href={`/browse-jobs?industry=${industry.id}`} title={industry.name}>
                   <div className="utf_category_box_area">
                     <div className="utf_category_desc">
                       <div className="utf_category_icon">
-                        <i className={cat.icon ?? "icon-briefcase"} aria-hidden="true"></i>
+                        <i className={industry.icon ?? "icon-briefcase"} aria-hidden="true"></i>
                       </div>
                       <div className="category-detail utf_category_desc_text">
-                        <h4>{cat.name}</h4>
-                        <p>{(cat.jobCount ?? 0) + " Jobs"}</p>
+                        <h4>{industry.name}</h4>
+                        <p>{(industry.jobCount ?? 0) + " Jobs"}</p>
                       </div>
                     </div>
                   </div>
                 </a>
               </div>
             ))}
-            {!catsLoading && featuredCats.length === 0 && (
+            {!industriesLoading && featuredIndustries.length === 0 && (
               <>
                 {/* fallback: danh sách tĩnh 8 mục nếu không có dữ liệu */}
                 {[
@@ -352,8 +412,8 @@ const Home = () => {
             )}
 
             <div className="col-md-12 mrg-top-20 text-center">
-              <a href="/browse-categories" className="btn theme-btn btn-m">
-                View All Categories
+              <a href="/browse-industry" className="btn theme-btn btn-m">
+                View All Industries
               </a>
             </div>
           </div>

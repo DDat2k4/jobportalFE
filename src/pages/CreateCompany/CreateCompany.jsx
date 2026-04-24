@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { createCompany, createCompanyAddress, createCompanySocial } from "../../api/companyApi";
 import { uploadSingleFile } from "../../api/uploadApi";
-import { getAllCategories } from "../../api/categoryApi";
+import { getAllIndustries } from "../../api/industryApi";
 import "../../assets/plugins/bootstrap/css/bootstrap.min.css";
 import "../../assets/plugins/icons/css/icons.css";
 import "../../assets/plugins/nice-select/css/nice-select.css";
@@ -68,7 +68,7 @@ const CreateCompany = () => {
     tagline: "",
     ownerName: "",
     logoUrl: "",
-    categoryId: "",
+    industryId: "",
     establishedYear: "",
     employees: "",
     workingTime: "",
@@ -105,7 +105,7 @@ const CreateCompany = () => {
   ];
 
   const [logoFile, setLogoFile] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const [industrys, setindustrys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [notice, setNotice] = useState(null);
@@ -114,17 +114,17 @@ const CreateCompany = () => {
   // Lấy token từ localStorage
   const accessToken = localStorage.getItem("accessToken");
 
-  // Load categories
+  // Load career roles
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchIndustries = async () => {
       try {
-        const data = await getAllCategories();
-        setCategories(data);
+        const data = await getAllIndustries();
+        setindustrys(data);
       } catch (error) {
-        console.error("Failed to fetch categories", error);
+        console.error("Failed to fetch industries", error);
       }
     };
-    fetchCategories();
+    fetchIndustries();
   }, []);
 
   // Handle thay đổi input chung
@@ -197,7 +197,7 @@ const CreateCompany = () => {
       // Chuẩn bị payload công ty
       const companyPayload = {
         ...formData,
-        categoryId: Number(formData.categoryId),
+        industryId: Number(formData.industryId),
         employees: Number(formData.employees),
         establishedYear: Number(formData.establishedYear),
       };
@@ -229,7 +229,7 @@ const CreateCompany = () => {
         tagline: "",
         ownerName: "",
         logoUrl: "",
-        categoryId: "",
+        industryId: "",
         establishedYear: "",
         employees: "",
         workingTime: "",
@@ -375,16 +375,16 @@ const CreateCompany = () => {
                     )}
                   </div>
                   <div className="col-md-6">
-                    <label>Category</label>
+                    <label>Industry</label>
                     <select
-                      name="categoryId"
-                      value={formData.categoryId}
+                      name="industryId"
+                      value={formData.industryId}
                       onChange={handleChange}
                       className="wide form-control"
                       required
                     >
-                      <option value="">-- Select Category --</option>
-                      {categories.map((cat) => (
+                      <option value="">-- Select Industry --</option>
+                      {industrys.map((cat) => (
                         <option key={cat.id} value={cat.id}>
                           {cat.name}
                         </option>

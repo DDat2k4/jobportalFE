@@ -7,7 +7,8 @@ import { createApplication } from "../../api/applicationApi";
 import { getUserId } from "../../utils/jwt";
 import { getDefaultUserCv, getUserCvs } from "../../api/userCvApi";
 import { getSkills as getSkillList, getSkillById } from "../../api/skillApi";
-import { getCategories } from "../../api/categoryApi";
+import { getIndustries } from "../../api/industryApi";
+import { getCareerRoles } from "../../api/careerRoleApi";
 import "../../assets/plugins/bootstrap/css/bootstrap.min.css";
 import "../../assets/plugins/icons/css/icons.css";
 import "../../assets/plugins/animate/animate.css";
@@ -47,12 +48,15 @@ const BrowseJob = () => {
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [salaryFilters, setSalaryFilters] = useState([]);
   const [status, setStatus] = useState(1);
-  const [categoryId, setCategoryId] = useState(undefined);
+  const [careerRoleId, setCareerRoleId] = useState(undefined);
   const [companyId, setCompanyId] = useState(undefined);
   const [companyCache, setCompanyCache] = useState({});
   const [skillCache, setSkillCache] = useState({}); // id -> skill object { id, name }
-  const [categories, setCategories] = useState([]);
-  const [categoriesLoading, setCategoriesLoading] = useState(false);
+  const [industries, setIndustries] = useState([]);
+  const [industriesLoading, setIndustriesLoading] = useState(false);
+  const [industryId, setIndustryId] = useState(undefined);
+  const [careerRoles, setCareerRoles] = useState([]);
+  const [careerRolesLoading, setCareerRolesLoading] = useState(false);
   const [expOpen, setExpOpen] = useState(false);
   const [qualOpen, setQualOpen] = useState(false);
   const [applying, setApplying] = useState(false);
@@ -82,12 +86,14 @@ const BrowseJob = () => {
   useEffect(() => {
     try {
       const qs = new URLSearchParams(window.location.search);
-      const qCategory = qs.get("category");
+      const qIndustry = qs.get("industry");
+      const qCareerRole = qs.get("careerRole");
       const qStatus = qs.get("status");
       const qCompany = qs.get("companyId");
       const qKeyword = qs.get("keyword");
       const qLocation = qs.get("location");
-      if (qCategory) setCategoryId(Number(qCategory));
+      if (qIndustry) setIndustryId(Number(qIndustry));
+      if (qCareerRole) setCareerRoleId(Number(qCareerRole));
       if (qStatus) setStatus(Number(qStatus));
       if (qCompany) setCompanyId(Number(qCompany));
       if (qKeyword) setKeyword(qKeyword);
@@ -95,27 +101,56 @@ const BrowseJob = () => {
     } catch { }
   }, []);
 
-  // Load categories
+  // Load industries
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      setCategoriesLoading(true);
+      setIndustriesLoading(true);
       try {
-        const res = await getCategories({ page: 1, size: 100 });
+        const res = await getIndustries({ page: 1, size: 100 });
         if (cancelled) return;
         const items = res?.items ?? (Array.isArray(res) ? res : []);
-        setCategories(items || []);
+        setIndustries(items || []);
       } catch (e) {
-        console.error("Failed to load categories", e);
-        if (!cancelled) setCategories([]);
+        console.error("Failed to load industries", e);
+        if (!cancelled) setIndustries([]);
       } finally {
-        if (!cancelled) setCategoriesLoading(false);
+        if (!cancelled) setIndustriesLoading(false);
       }
     })();
     return () => {
       cancelled = true;
     };
   }, []);
+
+  // Load career roles based on selected industry
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setCareerRolesLoading(true);
+      try {
+        let items = [];
+        if (industryId) {
+          // Load career roles for specific industry
+          const res = await getCareerRoles({ page: 1, size: 1000, industryId });
+          items = res?.items ?? (Array.isArray(res) ? res : []);
+        } else {
+          // Load all career roles
+          const res = await getCareerRoles({ page: 1, size: 1000 });
+          items = res?.items ?? (Array.isArray(res) ? res : []);
+        }
+        if (!cancelled) setCareerRoles(items || []);
+      } catch (e) {
+        console.error("Failed to load career roles", e);
+        if (!cancelled) setCareerRoles([]);
+      } finally {
+        if (!cancelled) setCareerRolesLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [industryId]);
 
   // NEW: normalize text for accent-insensitive search
   const normalizeText = (text = "") =>
@@ -146,7 +181,8 @@ const BrowseJob = () => {
         size: pageSize,
         ...(keywordParam ? { keyword: keywordParam } : {}),
         ...(locationParam ? { location: locationParam } : {}),
-        ...(categoryId ? { categoryId } : {}),
+        ...(industryId ? { industryId } : {}),
+        ...(careerRoleId ? { careerRoleId } : {}),
         ...(companyId ? { companyId } : {}),
         sortBy: "id",
         asc: false,
@@ -220,7 +256,13 @@ const BrowseJob = () => {
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, pageSize, categoryId, companyId]);
+  }, [page, pageSize, industryId, careerRoleId, companyId]);
+
+  // Reset careerRoleId when industryId changes
+  useEffect(() => {
+    setCareerRoleId(undefined);
+    setPage(1);
+  }, [industryId]);
 
   // Immediate fetch when checkbox filters change
   useEffect(() => {
@@ -325,7 +367,7 @@ const BrowseJob = () => {
     setLocation("");
     setTypes([]);
     setSalaryFilters([]);
-    setCategoryId(undefined);
+    setCareerRoleId(undefined);
     setPage(1);
   };
 
@@ -512,29 +554,60 @@ const BrowseJob = () => {
                   </div>
                 </div>
 
-                {/* Category Filter */}
+                {/* Industry Filter */}
                 <div className="widget-boxed padd-bot-0">
                   <div className="widget-boxed-header">
-                    <h4>Category</h4>
+                    <h4>Industry</h4>
                   </div>
                   <div className="widget-boxed-body">
-                    {categoriesLoading ? (
-                      <div className="text-center">Loading categories...</div>
+                    {industriesLoading ? (
+                      <div className="text-center">Loading industries...</div>
                     ) : (
                       <div className="side-list no-border">
                         <select
                           className="form-control"
-                          value={categoryId || ""}
+                          value={industryId || ""}
                           onChange={(e) => {
                             const val = e.target.value;
-                            setCategoryId(val ? Number(val) : undefined);
+                            setIndustryId(val ? Number(val) : undefined);
                             setPage(1);
                           }}
                         >
-                          <option value="">All Categories</option>
-                          {categories.map((cat) => (
-                            <option key={cat.id} value={cat.id}>
-                              {cat.name}
+                          <option value="">All Industries</option>
+                          {industries.map((industry) => (
+                            <option key={industry.id} value={industry.id}>
+                              {industry.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Career Role Filter */}
+                <div className="widget-boxed padd-bot-0">
+                  <div className="widget-boxed-header">
+                    <h4>Career Role</h4>
+                  </div>
+                  <div className="widget-boxed-body">
+                    {careerRolesLoading ? (
+                      <div className="text-center">Loading career roles...</div>
+                    ) : (
+                      <div className="side-list no-border">
+                        <select
+                          className="form-control"
+                          value={careerRoleId || ""}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setCareerRoleId(val ? Number(val) : undefined);
+                            setPage(1);
+                          }}
+                        >
+                          <option value="">All Career Roles</option>
+                          {careerRoles.map((role) => (
+                            <option key={role.id} value={role.id}>
+                              {role.name}
                             </option>
                           ))}
                         </select>
@@ -712,7 +785,9 @@ const BrowseJob = () => {
                 const jobCode = job.code ?? job.jobCode ?? job.id ?? job._id ?? "";
                 const locationText = job.location ?? "";
                 const title = job.title ?? "Job Title";
-                const tagline = job.categoryName ?? job.category?.name ?? job.department ?? "";
+                const industryName = job.industryName ?? job.industry?.name ?? "";
+                const careerRoleName = job.careerRoleName ?? job.careerRole?.name ?? job.categoryName ?? job.category?.name ?? "";
+                const tagline = [industryName, careerRoleName].filter(Boolean).join(" • ") || "";
                 const salaryRange = job.salaryRange ?? "";
                 const deadline = job.deadline ?? "";
                 const requirements = job.requirements ?? job.requirement ?? "";

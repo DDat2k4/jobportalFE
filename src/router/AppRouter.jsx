@@ -4,17 +4,16 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import NotFound from "../pages/NotFound/NotFound";
-
 import Employer from "../pages/Employer/Employer";
 import CreateCompany from "../pages/CreateCompany/CreateCompany";
 import AddJob from "../pages/AddJob/AddJob";
-import BrowseCategory from "../pages/BrowseCategory/BrowseCategory";
+import BrowseIndustry from "../pages/BrowseIndustry/BrowseIndustry";
 import BrowseJob from "../pages/BrowseJob/BrowseJob";
 import Seeker from "../pages/Seeker/Seeker";
 import JobDetail from "../pages/JobDetail/JobDetail";
 import CreateCV from "../pages/CreateCv/CreateCv";
 import CvPreview from "../pages/CvPreview/CvPreview";
-import CategoryManagement from "../pages/CategoryManagent/CategoryManagent";
+import IndustryManagement from "../pages/IndustryManagement/IndustryManagement";
 import Company from "../pages/Company/Company";
 import CVList from "../pages/CVList/CVList";
 import EmployerApplications from "../pages/EmployerApplications/EmployerApplications";
@@ -41,7 +40,8 @@ export default function AppRouter() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/browse-categories" element={<BrowseCategory />} />
+        <Route path="/browse-industry" element={<BrowseIndustry />} />
+        <Route path="/browse-career-roles" element={<BrowseIndustry />} />
         <Route path="/browse-jobs" element={<BrowseJob />} />
         <Route path="/job-detail/:id" element={<JobDetail />} />
 
@@ -131,12 +131,12 @@ export default function AppRouter() {
           }
         />
 
-        {/* Admin - Category */}
+        {/* Admin - Industry Management */}
         <Route
-          path="/category-management"
+          path="/industry-management"
           element={
-            <ProtectedRoute requirePermissions={["JOB_CATEGORY_CREATE"]}>
-              <CategoryManagement />
+            <ProtectedRoute requirePermissions={["INDUSTRY_CREATE"]}>
+              <IndustryManagement />
             </ProtectedRoute>
           }
         />

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { createJob } from "../../api/jobApi";
-import { getAllCategories } from "../../api/categoryApi";
+import { getAllCareerRoles } from "../../api/careerRoleApi";
 import axios from "axios";
 import { getEmployerCompanies } from "../../api/userApi";
 import { getSkills as getSkillList } from "../../api/skillApi";
@@ -34,7 +34,7 @@ const AddJob = () => {
     requirements: "",
     salaryRange: "",
     location: "",
-    categoryId: "",
+    careerRoleId: "",
     type: "Full-time",
     deadline: "",
     status: 1,
@@ -42,7 +42,7 @@ const AddJob = () => {
     requiredExperienceYears: 0,
   });
 
-  const [categories, setCategories] = useState([]);
+  const [careerRoles, setCareerRoles] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [skillsList, setSkillsList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -76,10 +76,10 @@ const AddJob = () => {
   useEffect(() => {
     (async () => {
       try {
-        const cats = await getAllCategories();
-        if (Array.isArray(cats)) setCategories(cats);
+        const cats = await getAllCareerRoles();
+        if (Array.isArray(cats)) setCareerRoles(cats);
       } catch (err) {
-        console.warn("Failed load categories", err);
+        console.warn("Failed load career roles", err);
       }
     })();
   }, []);
@@ -311,7 +311,7 @@ const AddJob = () => {
       requirements: form.requirements || "",
       salaryRange: form.salaryRange || "",
       location: form.location || "",
-      categoryId: form.categoryId ? Number(form.categoryId) : undefined,
+      careerRoleId: form.careerRoleId ? Number(form.careerRoleId) : undefined,
       type: form.type || "Full-time",
       deadline: form.deadline || undefined,
       status: Number(form.status) || 1,
@@ -340,7 +340,7 @@ const AddJob = () => {
         requirements: "",
         salaryRange: "",
         location: "",
-        categoryId: "",
+        careerRoleId: "",
         type: "Full-time",
         deadline: "",
         status: 1,
@@ -461,10 +461,10 @@ const AddJob = () => {
                         )}
                       </div>
                       <div className="col-md-4 mb-3">
-                        <label className="form-label">Category</label>
-                        <select name="categoryId" value={form.categoryId} onChange={handleChange} className="form-control">
-                          <option value="">-- Select Category --</option>
-                          {categories.map((c) => (
+                        <label className="form-label">Career Role</label>
+                        <select name="careerRoleId" value={form.careerRoleId} onChange={handleChange} className="form-control">
+                          <option value="">-- Select Career Role --</option>
+                          {careerRoles.map((c) => (
                             <option key={c.id ?? c._id} value={c.id ?? c._id}>
                               {c.name ?? c.title}
                             </option>

@@ -1,0 +1,51 @@
+/* Narrow container used by this page */
+.container-narrow {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* The page uses `mb-12` but Bootstrap doesn't have it by default */
+.mb-12 { margin-bottom: 12px; }
+
+/* Pagination wrapper helper */
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.industry-meta {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.industry-jobs,
+.industry-state {
+  display: inline-flex;
+  justify-content: center;
+}
+
+.industry-state {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--bs-success-border-subtle, var(--bs-success));
+  background: var(--bs-success-bg-subtle, transparent);
+  color: var(--bs-success-text-emphasis, var(--bs-success));
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.industry-state.is-selected {
+  font-weight: 700;
+}
+
+.industry-state.is-view {
+  opacity: 0.95;
+}

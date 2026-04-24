@@ -4,7 +4,8 @@ import Footer from "../../components/Footer";
 import { getEmployerCompanies } from "../../api/userApi";
 import { getJobs, updateJob, deleteJob } from "../../api/jobApi";
 import { getCompanyFull, updateCompany, deleteCompany, createCompanyAddress, updateCompanyAddress, deleteCompanyAddress, createCompanySocial, updateCompanySocial, deleteCompanySocial } from "../../api/companyApi";
-import { getAllCategories } from "../../api/categoryApi";
+import { getAllIndustries } from "../../api/industryApi";
+import { getAllCareerRoles } from "../../api/careerRoleApi";
 import { getUserId as getUserIdFromToken } from "../../utils/jwt";
 import { uploadImage } from "../../api/uploadApi";
 import { getSkills as getSkillList, getSkillById } from "../../api/skillApi";
@@ -54,13 +55,16 @@ const Company = () => {
 
   const [openDetails, setOpenDetails] = useState({}); 
   const [compFullById, setCompFullById] = useState({}); // { [id]: { loading, error, data } }
-  const [categoriesMap, setCategoriesMap] = useState({});
-  const [categories, setCategories] = useState([]);
-  const [categoriesLoading, setCategoriesLoading] = useState(false);
+  const [industriesMap, setIndustriesMap] = useState({});
+  const [industries, setIndustries] = useState([]);
+  const [industriesLoading, setIndustriesLoading] = useState(false);
+  const [careerRolesMap, setCareerRolesMap] = useState({});
+  const [careerRoles, setCareerRoles] = useState([]);
+  const [careerRolesLoading, setCareerRolesLoading] = useState(false);
   const [editingCompanyId, setEditingCompanyId] = useState(null);
   const [companyForm, setCompanyForm] = useState({
     name: "", tagline: "", website: "", employees: "", workingTime: "",
-    establishedYear: "", ownerName: "", categoryId: "", description: "", logoUrl: ""
+    establishedYear: "", ownerName: "", industryId: "", description: "", logoUrl: ""
   });
 
   const [uploadingLogo, setUploadingLogo] = useState(false);
@@ -112,25 +116,46 @@ const Company = () => {
 
   useEffect(() => {
     if (userIdNum > 0) loadCompanies(userIdNum);
-    // load categories map once for display names
+    // load industries map once for display names (for companies)
     (async () => {
-      setCategoriesLoading(true);
+      setIndustriesLoading(true);
       try {
-        const cats = await getAllCategories();
-        if (Array.isArray(cats)) {
-          setCategories(cats);
+        const roles = await getAllIndustries();
+        if (Array.isArray(roles)) {
+          setIndustries(roles);
           const m = {};
-          cats.forEach((c, i) => {
+          roles.forEach((c, i) => {
             const id = c.id ?? c._id ?? i;
-            m[id] = c.name ?? c.title ?? c.category ?? String(id);
+            m[id] = c.name ?? c.title ?? c.industry ?? String(id);
           });
-          setCategoriesMap(m);
+          setIndustriesMap(m);
         }
       } catch (err) {
-        console.warn("Failed to load categories", err);
-        setCategories([]);
+        console.warn("Failed to load industries", err);
+        setIndustries([]);
       } finally {
-        setCategoriesLoading(false);
+        setIndustriesLoading(false);
+      }
+    })();
+    // load career roles map for jobs
+    (async () => {
+      setCareerRolesLoading(true);
+      try {
+        const roles = await getAllCareerRoles();
+        if (Array.isArray(roles)) {
+          setCareerRoles(roles);
+          const m = {};
+          roles.forEach((c, i) => {
+            const id = c.id ?? c._id ?? i;
+            m[id] = c.name ?? c.title ?? c.careerRole ?? String(id);
+          });
+          setCareerRolesMap(m);
+        }
+      } catch (err) {
+        console.warn("Failed to load career roles", err);
+        setCareerRoles([]);
+      } finally {
+        setCareerRolesLoading(false);
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -340,7 +365,7 @@ const Company = () => {
       requirements: job.requirements ?? "",
       salaryRange: job.salaryRange ?? "",
       location: job.location ?? "",
-      categoryId: job.categoryId ?? job.category?.id ?? undefined,
+      careerRoleId: job.careerRoleId ?? job.careerRoleId ?? job.careerRole?.id ?? job.category?.id ?? undefined,
       requiredEducation: job.requiredEducation ?? "NONE",
       requiredExperienceYears: job.requiredExperienceYears ?? 0,
       // include skills if present (array)
@@ -377,7 +402,7 @@ const Company = () => {
       requirements,
       salaryRange,
       location,
-      categoryId,
+      careerRoleId,
       requiredEducation,
       requiredExperienceYears,
       skills,
@@ -395,7 +420,7 @@ const Company = () => {
       deadline: deadline || null,
       requiredEducation: requiredEducation || "NONE",
       requiredExperienceYears: Number(requiredExperienceYears ?? 0),
-      ...(categoryId !== undefined && categoryId !== null ? { categoryId: Number(categoryId) } : {}),
+      ...(careerRoleId !== undefined && careerRoleId !== null ? { careerRoleId: Number(careerRoleId) } : {}),
       // include skills if any (map to expected shape)
       ...(Array.isArray(skills) && skills.length > 0 ? {
         skills: skills.map((s) => {
@@ -447,7 +472,7 @@ const Company = () => {
     workingTime: c.workingTime ?? c.working_time ?? "",
     establishedYear: c.establishedYear ?? c.established_year ?? "",
     ownerName: c.ownerName ?? c.owner_name ?? "",
-    categoryId: c.categoryId ?? c.category_id ?? c.category?.id ?? "",
+    industryId: c.industryId ?? c.category_id ?? c.industry?.id ?? c.industryId ?? c.category?.id ?? "",
     description: c.description ?? "",
     logoUrl: c.logoUrl ?? c.logo_url ?? "",
   });
@@ -460,7 +485,7 @@ const Company = () => {
     workingTime: c.workingTime ?? "",
     establishedYear: c.establishedYear ?? "",
     ownerName: c.ownerName ?? "",
-    categoryId: c.categoryId ?? "",
+    industryId: c.industryId ?? "",
     description: c.description ?? "",
     logoUrl: c.logoUrl ?? "",
   });
@@ -546,7 +571,7 @@ const Company = () => {
         workingTime: companyForm.workingTime ?? "",
         establishedYear: toNum(companyForm.establishedYear),
         ownerName: companyForm.ownerName ?? "",
-        categoryId: companyForm.categoryId !== "" ? Number(companyForm.categoryId) : null,
+        industryId: companyForm.industryId !== "" ? Number(companyForm.industryId) : null,
         description: companyForm.description ?? "",
         logoUrl: companyForm.logoUrl ?? "",
       };
@@ -889,23 +914,23 @@ const Company = () => {
                                   <input className="form-control" name="ownerName" value={companyForm.ownerName} onChange={onCompanyFieldChange} />
                                 </div>
                                 <div className="col-md-6">
-                                  <label>Category</label>
-                                  {!categoriesLoading ? (
+                                  <label>Industry</label>
+                                  {!industriesLoading ? (
                                     <select
                                       className="form-control"
-                                      name="categoryId"
-                                      value={companyForm.categoryId ?? ""}
-                                      onChange={(e) => setCompanyForm((f) => ({ ...f, categoryId: e.target.value }))
+                                      name="industryId"
+                                      value={companyForm.industryId ?? ""}
+                                      onChange={(e) => setCompanyForm((f) => ({ ...f, industryId: e.target.value }))
                                       }
                                     >
-                                      {categories.map((cat) => (
+                                      {industries.map((cat) => (
                                         <option key={cat.id ?? cat._id} value={cat.id ?? cat._id}>
                                           {cat.name ?? cat.title ?? String(cat.id ?? cat._id)}
                                         </option>
                                       ))}
                                     </select>
                                   ) : (
-                                    <input type="text" className="form-control" disabled value="Loading categories..." />
+                                    <input type="text" className="form-control" disabled value="Loading industries..." />
                                   )}
                                 </div>
                                 <div className="col-md-12">
@@ -1071,13 +1096,15 @@ const Company = () => {
                                           <li><strong>Established:</strong> {comp?.establishedYear ?? "-"}</li>
                                           <li><strong>Owner:</strong> {comp?.ownerName || "-"}</li>
                                           <li>
-                                            <strong>Category:</strong>{" "}
+                                            <strong>Industry:</strong>{" "}
                                             {(
                                               (comp && (
-                                                categoriesMap[comp.categoryId] ||
+                                                industriesMap[comp.industryId] ||
+                                                comp.industry?.name ||
                                                 comp.category?.name ||
-                                                comp.categoryName ||
-                                                comp.categoryId
+                                                comp.industryName ||
+                                                comp.industryName ||
+                                                comp.industryId
                                               ))
                                             ) ?? "-"}
                                           </li>
@@ -1274,7 +1301,7 @@ const Company = () => {
                                     <div className="vertical-job-card">
                                       <div className="vertical-job-header">
                                         <h4><a href={`/job-detail/${jid}`}>{j.title || "Job"}</a></h4>
-                                        <span className="com-tagline">{j.categoryName || j.type || ""}</span>
+                                        <span className="com-tagline">{j.careerRoleName || j.type || ""}</span>
                                       </div>
                                       <div className="vertical-job-body">
                                         {!editing ? (
@@ -1376,6 +1403,25 @@ const Company = () => {
                                               />
                                             </div>
                                             <div className="col-md-6 mrg-top-10">
+                                              <label>Career Role</label>
+                                              {!careerRolesLoading ? (
+                                                <select
+                                                  className="form-control"
+                                                  value={editingJob.careerRoleId ?? ""}
+                                                  onChange={(e) => setEditingJob({ ...editingJob, careerRoleId: e.target.value ? Number(e.target.value) : undefined })}
+                                                >
+                                                  <option value="">-- Select Career Role --</option>
+                                                  {careerRoles.map((role) => (
+                                                    <option key={role.id ?? role._id} value={role.id ?? role._id}>
+                                                      {role.name ?? role.title ?? String(role.id ?? role._id)}
+                                                    </option>
+                                                  ))}
+                                                </select>
+                                              ) : (
+                                                <input type="text" className="form-control" disabled value="Loading career roles..." />
+                                              )}
+                                            </div>
+                                            <div className="col-md-6 mrg-top-10">
                                               <label>Required Education</label>
                                               <select
                                                 className="form-control"
@@ -1421,8 +1467,8 @@ const Company = () => {
                                             </div>
                                             <div className="col-md-12" style={{ display: "none" }}>
                                               <input
-                                                value={editingJob.categoryId ?? ""}
-                                                onChange={(e) => setEditingJob({ ...editingJob, categoryId: e.target.value })}
+                                                value={editingJob.careerRoleId ?? ""}
+                                                onChange={(e) => setEditingJob({ ...editingJob, careerRoleId: e.target.value })}
                                               />
                                             </div>
                                             {/* Skills editor */}

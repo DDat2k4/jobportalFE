@@ -32,7 +32,7 @@ const menuItems = [
       { label: "Create CV", link: "/create-cv", permission: "USER_CV_CREATE", role: "JOB_SEEKER" },
       { label: "CV List", link: "/cv-list", permission: "USER_CV_READ", role: "JOB_SEEKER" },
       { label: "Browse Jobs", link: "/browse-jobs", permission: "JOB_READ" },
-      { label: "Browse Categories", link: "/browse-categories", permission: "JOB_CATEGORY_READ" },
+      { label: "Browse Industries", link: "/browse-industry", permission: "CAREER_ROLE_READ" },
     
     ],
   },
@@ -43,7 +43,7 @@ const menuItems = [
       { label: "User Management", link: "/users", permission: "ROLE_CREATE" },
       { label: "Role Management", link: "/roles", permission: "ROLE_CREATE" },
       { label: "Permission Management", link: "/permissions", permission: "PERMISSION_CREATE" },
-      { label: "Category Management", link: "/category-management", permission: "JOB_CATEGORY_CREATE" },
+      { label: "Industry Management", link: "/industry-management", permission: "CAREER_ROLE_CREATE" },
       { label: "Skill Management", link: "/skills-management", permission: "SKILL_CREATE" },
       { label: "Role Permission Management", link: "/roles-permissions", permission: "ROLE_PERMISSION_CREATE" },
     ],
